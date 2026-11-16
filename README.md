@@ -2,7 +2,7 @@
 
 Test de 20 afirmaciones que te sitúa en un mapa político de dos ejes y te muestra en qué temas coincides o discrepas con los programas electorales de las elecciones generales del 29 de noviembre de 2026. Sin registro, sin analítica, sin servidor.
 
-**Pruébala aquí:** `https://<tu-cuenta>.github.io/brujula29n/`
+**Pruébala aquí:** https://miguelmunozicam-del.github.io/brujula29n/
 
 ## Qué hace
 - Te sitúa en dos ejes: **económico** (intervencionista − / liberal +) y **social** (progresista − / conservador +), con la zona de centro marcada.

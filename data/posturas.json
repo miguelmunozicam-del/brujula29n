@@ -2,7 +2,7 @@
   "version": "1.0",
   "fecha": "2026-11-16",
   "elecciones": "Elecciones generales 29 de noviembre de 2026",
-  "repo_url": "",
+  "repo_url": "https://github.com/miguelmunozicam-del/brujula29n",
   "umbral_sin_postura": 5,
   "umbral_cambios": 5,
   "escala": {

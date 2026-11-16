@@ -1,5 +1,17 @@
 # Historial de cambios
 
+## [v1.2] · 2026-11-16
+### Cambiado
+- Rediseño profesional: identidad pizarra + acento ocre (sin colores de partido), tipografía del sistema de alto contraste, tarjetas con jerarquía clara y diseño a dos columnas en escritorio.
+- Portada con mapa ilustrativo, rasgos clave (privacidad, fuentes, duración) y programas comparados.
+- Test en tarjeta con etiquetas de la escala visibles en pantallas medianas y grandes.
+- Resultado con indicadores por eje (cifra, categoría y regla de posición), perfil destacado y cabecera con acciones en escritorio.
+- Programas en tarjetas con cifras, tira de 20 temas y detalle desplegable; citas en tarjetas a dos columnas.
+### Añadido
+- Página «Cómo funciona» con metodología, tipos de codificación, límites, privacidad e independencia.
+- Navegación en cabecera y pie con enlace al repositorio.
+- Enlace «Propón una corrección» activo (abre un issue en GitHub).
+
 ## [v1.1] · 2026-11-16
 ### Cambiado
 - Nueva capa de diseño: paleta monocroma (papel, grafito y un único acento ocre) sin colores asociables a partidos; titulares y afirmaciones en serif del sistema; sin fuentes ni recursos externos.
