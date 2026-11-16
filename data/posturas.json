@@ -1,0 +1,904 @@
+{
+  "version": "1.0",
+  "fecha": "2026-11-16",
+  "elecciones": "Elecciones generales 29 de noviembre de 2026",
+  "repo_url": "",
+  "umbral_sin_postura": 5,
+  "umbral_cambios": 5,
+  "escala": {
+    "opciones": [
+      "Muy en desacuerdo",
+      "En desacuerdo",
+      "Indiferente / no tengo una postura clara",
+      "De acuerdo",
+      "Muy de acuerdo"
+    ],
+    "valores": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ]
+  },
+  "ejes": {
+    "economico": {
+      "negativo": "Intervencionista",
+      "positivo": "Liberal"
+    },
+    "social": {
+      "negativo": "Progresista",
+      "positivo": "Conservador"
+    }
+  },
+  "criterio_codificacion": {
+    "literal": "El programa lo dice expresamente.",
+    "deducida": "Deducción directa: la medida implica la postura sin interpretación de afinidad.",
+    "mixta": "Medidas en ambos sentidos; no cuenta como coincidencia ni discrepancia.",
+    "sin_postura": "El programa no aborda el tema o no lo hace con claridad suficiente."
+  },
+  "partidos": [
+    {
+      "id": "frente_amplio",
+      "nombre": "Frente Amplio",
+      "programa_url": ""
+    },
+    {
+      "id": "pp",
+      "nombre": "PP",
+      "programa_url": ""
+    },
+    {
+      "id": "psoe",
+      "nombre": "PSOE",
+      "programa_url": ""
+    },
+    {
+      "id": "vox",
+      "nombre": "VOX",
+      "programa_url": ""
+    }
+  ],
+  "preguntas": [
+    {
+      "id": "E1",
+      "eje": "economico",
+      "direccion": 1,
+      "tema": "Fiscalidad",
+      "etiqueta": "Impuestos frente a gasto",
+      "texto": "Bajar impuestos como el IRPF o el de sociedades estimula más la economía que aumentar el gasto público.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Nuestra reforma fiscal hará que el nuevo esfuerzo tributario recaiga sobre las grandes corporaciones, el sector financiero y las grandes fortunas",
+          "referencia": "Introducción, punto 4",
+          "nota": "Propone más recaudación e inversión pública (3,5 % del PIB en transición ecológica).",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "La prosperidad de un país la crean las personas que trabajan, ahorran, contratan, inventan y arriesgan, y la crean cuando se las deja.",
+          "referencia": "Bloque 4, introducción",
+          "nota": "Acompaña rebajas de IRPF, IVA y Sociedades (bloque 4.4).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "abriremos una nueva etapa de inversión productiva, apoyada en instrumentos como el Fondo España Crece, que movilizará 120.000 millones de euros",
+          "referencia": "Bloque económico, introducción",
+          "nota": "Apuesta por la inversión pública y sube la tributación del capital (compromiso 130).",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Reducir el tipo del Impuesto de Sociedades con el fin de promover la dinamización de nuestra economía, el crecimiento de nuestras empresas y la creación efectiva de empleo.",
+          "referencia": "Medida 2",
+          "nota": "Propone una «rebaja masiva de impuestos».",
+          "intensidad": "alta"
+        }
+      }
+    },
+    {
+      "id": "E2",
+      "eje": "economico",
+      "direccion": -1,
+      "tema": "Vivienda",
+      "etiqueta": "Tope al alquiler",
+      "texto": "Limitar por ley el precio del alquiler en las zonas más tensionadas es una buena medida.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Limitaremos por ley el precio del alquiler residencial en todas las zonas tensionadas",
+          "referencia": "Apartado 1.3",
+          "nota": "Tope del 25 % de la renta del barrio y rebaja adicional del 30 % en grandes ciudades.",
+          "intensidad": "alta"
+        },
+        "pp": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Eliminaremos las zonas tensionadas y el índice de precios",
+          "referencia": "Medida 145",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Congelar temporalmente las rentas que superen los índices de referencia, evitando incrementos abusivos en los mercados tensionados.",
+          "referencia": "Compromiso 62",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Derogación de la Ley de Vivienda.",
+          "referencia": "Medida 30",
+          "nota": "La Ley de Vivienda es la norma que habilita los topes en zonas tensionadas.",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E3",
+      "eje": "economico",
+      "direccion": -1,
+      "tema": "Fiscalidad",
+      "etiqueta": "Patrimonio y grandes fortunas",
+      "texto": "Los impuestos sobre el patrimonio y las grandes fortunas deberían mantenerse o reforzarse.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Garantizaremos que todos los patrimonios de más de un millón de euros tributen como mínimo un 2 %.",
+          "referencia": "Apartado 3.2",
+          "nota": "Añade una «Tasa Zucman» del 3 % por encima de 50 M€.",
+          "intensidad": "alta"
+        },
+        "pp": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Las Comunidades Autónomas seguirán decidiendo con libertad sobre sus impuestos propios y cedidos, dentro de sus competencias, y podrán bajarlos cuanto quieran.",
+          "referencia": "Medida 185",
+          "nota": "El Impuesto sobre el Patrimonio es un tributo cedido a las comunidades.",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "La recaudación de la tributación complementaria de los grandes patrimonios y de la mayor progresividad de las rentas del capital contribuirá a financiar la prestación por crianza",
+          "referencia": "Compromiso 127",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Revisión y reducción sistemática de todos los impuestos y tasas que lastran la prosperidad de los trabajadores, familias y empresas españolas.",
+          "referencia": "Medida 2",
+          "nota": "Propuesta general de reducción de todos los impuestos.",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E4",
+      "eje": "economico",
+      "direccion": 1,
+      "tema": "Servicios públicos",
+      "etiqueta": "Colaboración público-privada",
+      "texto": "La sanidad y la educación mejorarían con más colaboración entre lo público y lo privado.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "consagrar la gestión pública directa como la vía general para los centros y servicios del Sistema Nacional de Salud (SNS)",
+          "referencia": "Apartado 2.4",
+          "nota": "Deroga la Ley 15/1997 y busca que el 100 % de los fondos educativos vayan a la pública.",
+          "intensidad": "alta"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "LOS PADRES ELEGIRÁN COLEGIO, Y NINGÚN CONCIERTO EDUCATIVO SE ELIMINARÁ DONDE HAYA DEMANDA SUFICIENTE.",
+          "referencia": "Medida 212",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Limitar la privatización de la sanidad estableciendo la gestión directa como modalidad preferente en la prestación sanitaria.",
+          "referencia": "Compromiso 138",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Fomento de la colaboración público-privada cuando ayude efectivamente a reducir demoras",
+          "referencia": "Medida 62",
+          "nota": "También defiende la libre elección de centro educativo (medida 67).",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E5",
+      "eje": "economico",
+      "direccion": 1,
+      "tema": "Mercado laboral",
+      "etiqueta": "Salario mínimo y empleo",
+      "texto": "Subir mucho el salario mínimo acaba perjudicando el empleo de los menos cualificados.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Suelo legal del SMI al 60 % del salario medio neto",
+          "referencia": "Apartado 4.1",
+          "nota": "Proponer un suelo legal alto implica rechazar que dañe el empleo.",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Solo menciona el SMI a efectos fiscales (medida 177).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Blindar por ley el SMI por encima del 60% del salario medio",
+          "referencia": "Compromiso 87",
+          "nota": "Atribuye el récord de empleo a sus políticas, incluida la subida del 66 % del SMI.",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Habla de «salarios dignos» sin pronunciarse sobre el SMI (medida 8).",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E6",
+      "eje": "economico",
+      "direccion": -1,
+      "tema": "Papel del Estado",
+      "etiqueta": "Empresas públicas estratégicas",
+      "texto": "El Estado debería tener participación en empresas estratégicas, como las de energía, telecomunicaciones o defensa.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Dotaremos a la SEPI de los medios económicos y humanos para entrar como accionista en nuevas empresas y sectores estratégicos",
+          "referencia": "Apartado 6.2",
+          "nota": "Incluye banca pública y titularidad pública de las redes eléctricas.",
+          "intensidad": "alta"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "mixta",
+          "cita": "Revisaremos todas las participaciones empresariales del Estado y venderemos aquellas que no respondan a un interés público o estratégico acreditado.",
+          "referencia": "Medida 3",
+          "nota": "Vende las no estratégicas y mantiene las estratégicas: no cuenta como coincidencia ni como discrepancia.",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Mantendremos la participación del Estado en sectores estratégicos, preservando capacidades industriales y tecnológicas esenciales",
+          "referencia": "Compromiso 7",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "El programa no aborda este tema.",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E7",
+      "eje": "economico",
+      "direccion": -1,
+      "tema": "Pensiones",
+      "etiqueta": "Pensiones con el IPC",
+      "texto": "Las pensiones deben subir siempre con el IPC, aunque eso aumente la deuda pública.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "ubicaremos el derecho a la pensión pública y su revalorización automática con arreglo al IPC",
+          "referencia": "Apartado 4.3",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Aseguraremos que mantengan su poder adquisitivo y suban cada año con el IPC.",
+          "referencia": "Medida 108",
+          "nota": "También se compromete a reducir la deuda (medida 107).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Blindar constitucionalmente el sistema público de pensiones y su revalorización conforme al IPC",
+          "referencia": "Compromiso 100",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Habla de sostenibilidad de las pensiones vía crecimiento, sin mencionar el IPC (medida 7).",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E8",
+      "eje": "economico",
+      "direccion": 1,
+      "tema": "Mercado laboral",
+      "etiqueta": "Contratación y despido",
+      "texto": "Facilitar la contratación y el despido ayudaría a reducir el paro.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Reformaremos la indemnización por despido improcedente para que repare el daño real causado a la persona trabajadora y disuada de los despidos injustificados",
+          "referencia": "Apartado 4.1",
+          "nota": "Recupera también la autorización previa de los despidos colectivos.",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "No propone cambios en el despido.",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Reformar el despido improcedente para garantizar una reparación efectiva, proporcionada y disuasoria",
+          "referencia": "Compromiso 110",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "Derogar la legislación laboral de Sánchez que ha agravado la precariedad, desincentivado la contratación",
+          "referencia": "Medida 8",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E9",
+      "eje": "economico",
+      "direccion": -1,
+      "tema": "Mercado laboral",
+      "etiqueta": "Reducción de jornada",
+      "texto": "Reducir por ley la jornada laboral máxima, sin rebajar el salario, es una buena medida.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Reduciremos la jornada laboral limitando el tiempo de trabajo efectivo de forma progresiva hasta las 32 horas semanales.",
+          "referencia": "Apartado 4.1",
+          "nota": "",
+          "intensidad": "alta"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Propone bancos de horas y flexibilidad horaria, no reducción legal (medida 162).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Completar la reducción de la jornada a 37,5 horas e incentivar los avances en la negociación colectiva hacia las 35 horas.",
+          "referencia": "Compromiso 108",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "El programa no aborda este tema.",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "E10",
+      "eje": "economico",
+      "direccion": 1,
+      "tema": "Protección social",
+      "etiqueta": "Ayudas y búsqueda de empleo",
+      "texto": "Muchas ayudas públicas desincentivan la búsqueda activa de empleo.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Amplía el IMV, pero no se pronuncia sobre su efecto en la búsqueda de empleo.",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "Perseguiremos el fraude de quienes se aprovechan del sistema para no trabajar y cobrar prestaciones indebidas a costa del esfuerzo de los demás.",
+          "referencia": "Medida 175",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Potencia el IMV, sin pronunciarse sobre su efecto en la búsqueda de empleo.",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Sus medidas sobre subsidios se refieren a extranjeros, no al sistema en general.",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S1",
+      "eje": "social",
+      "direccion": -1,
+      "tema": "Final de la vida",
+      "etiqueta": "Eutanasia",
+      "texto": "La eutanasia es un derecho que el Estado debe garantizar.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Derecho a la interrupción voluntaria del embarazo, a la eutanasia y al suicidio asistido.",
+          "referencia": "Apartado 18.8",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Apuesta por los cuidados paliativos sin pronunciarse sobre la ley de eutanasia (medida 226).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Garantizar la muerte digna y el ejercicio efectivo del derecho a la eutanasia, de acuerdo con la legislación vigente.",
+          "referencia": "Compromiso 147",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Defensa del derecho a la vida desde su concepción hasta la muerte natural y fin de la cultura de la muerte.",
+          "referencia": "Medida 98",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S2",
+      "eje": "social",
+      "direccion": 1,
+      "tema": "Inmigración",
+      "etiqueta": "Nivel de inmigración",
+      "texto": "España debería recibir menos inmigración de la que recibe hoy.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "instaurar un procedimiento estable, permanente y reglado de regularización administrativa",
+          "referencia": "Apartado 16.2",
+          "nota": "Amplía vías legales y cierra los CIE.",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "LA INMIGRACIÓN SE AJUSTARÁ A LA CAPACIDAD REAL DE ACOGIDA DE NUESTRO PAÍS.",
+          "referencia": "Medida 41",
+          "nota": "Cupos anuales y prohibición de regularizaciones masivas (medida 42).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "España necesita una migración ordenada, legal y segura, que responda a sus necesidades demográficas y económicas.",
+          "referencia": "Bloque «Política migratoria»",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Ni uno más. Después de recibir a 5 millones de personas en 5 años España no puede acoger a más inmigrantes.",
+          "referencia": "Medida 9",
+          "nota": "Incluye un plan de «remigración» (medida 13).",
+          "intensidad": "alta"
+        }
+      }
+    },
+    {
+      "id": "S3",
+      "eje": "social",
+      "direccion": 1,
+      "tema": "Identidad y tradiciones",
+      "etiqueta": "Tauromaquia",
+      "texto": "Las corridas de toros forman parte del patrimonio cultural y deben protegerse.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Derogaremos la Ley 18/2013 que reconoce y protege la tauromaquia como patrimonio cultural.",
+          "referencia": "Apartado 2.6",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "empezando por la restitución del Premio Nacional de Tauromaquia",
+          "referencia": "Medida 136",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Retira financiación a las prácticas de maltrato animal sin mencionar la tauromaquia (compromiso 295).",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Defensa de la Tauromaquia y promoción de la difusión del arte taurino",
+          "referencia": "Medida 77",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S4",
+      "eje": "social",
+      "direccion": -1,
+      "tema": "Memoria",
+      "etiqueta": "Memoria Democrática",
+      "texto": "La Ley de Memoria Democrática es necesaria para reparar a las víctimas del franquismo.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Desarrollo reglamentario de la Ley de Memoria Democrática que recoja el derecho a la reparación de todas las víctimas de la dictadura franquista",
+          "referencia": "Apartado 18.6",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "DEROGAREMOS LA LEY DE MEMORIA DEMOCRÁTICA Y APROBAREMOS UNA LEY DE CONCORDIA.",
+          "referencia": "Medida 129",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Con la Ley de Memoria Democrática las hemos situado en el centro de las políticas públicas.",
+          "referencia": "Bloque «Proteger la memoria democrática»",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Superación de las divisivas leyes ideológicas que enfrentan a los españoles, tales como la de Memoria Democrática",
+          "referencia": "Medida 46",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S5",
+      "eje": "social",
+      "direccion": -1,
+      "tema": "Modelo territorial",
+      "etiqueta": "Referéndum en Cataluña",
+      "texto": "Un referéndum de autodeterminación pactado sería una vía legítima para resolver el conflicto en Cataluña.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "incluyendo el derecho a decidir mediante referéndum para resolver definitivamente la cuestión territorial",
+          "referencia": "Apartado 18.1",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Recuperaremos en el Código Penal el delito de sedición, adaptado a la legislación contemporánea, y el de convocatoria de referéndum ilegal.",
+          "referencia": "Medida 17",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Propone mejorar el Estado autonómico sin pronunciarse sobre un referéndum.",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Ilegalización de los partidos políticos, asociaciones u organizaciones de cualquier tipo que atenten contra la soberanía e independencia de España, su unidad e integridad territorial.",
+          "referencia": "Medida 103",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S6",
+      "eje": "social",
+      "direccion": 1,
+      "tema": "Educación y valores",
+      "etiqueta": "Educación sexual en la escuela",
+      "texto": "Las familias deberían poder excluir a sus hijos de las charlas escolares sobre sexualidad e identidad de género.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "deducida",
+          "cita": "Educaremos en igualdad a través de la coeducación y la educación sexoafectiva en las aulas.",
+          "referencia": "Apartado 2.7",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "El programa no aborda este tema.",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Garantizar la coeducación y la educación afectivo-sexual obligatorias en todas las etapas educativas",
+          "referencia": "Compromiso 344",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "Eliminación de contenidos ideológicos ajenos a las materias académicas.",
+          "referencia": "Medida 69",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S7",
+      "eje": "social",
+      "direccion": -1,
+      "tema": "Igualdad",
+      "etiqueta": "Paridad y cuotas",
+      "texto": "Las leyes de paridad y las cuotas de género siguen siendo necesarias.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Proponemos un modelo de listas en el que el formato cremallera se aplique como garantía mínima",
+          "referencia": "Apartado 2.7",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "El programa no aborda este tema.",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Reforzar el seguimiento y cumplimiento de la Ley de Paridad",
+          "referencia": "Compromiso 364",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "El programa no aborda este tema.",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S8",
+      "eje": "social",
+      "direccion": 1,
+      "tema": "Aborto",
+      "etiqueta": "Aborto",
+      "texto": "El aborto debería estar más restringido de lo que está hoy.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Reformaremos el artículo 43 de la Constitución para incluir el derecho al aborto",
+          "referencia": "Apartado 2.4",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "El programa no aborda este tema.",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Blindar constitucionalmente el derecho a la interrupción voluntaria del embarazo.",
+          "referencia": "Compromiso 327",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "Defensa del derecho a la vida desde su concepción hasta la muerte natural y fin de la cultura de la muerte.",
+          "referencia": "Medida 98",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S9",
+      "eje": "social",
+      "direccion": 1,
+      "tema": "Seguridad",
+      "etiqueta": "Penas y delincuencia",
+      "texto": "Endurecer las penas es la mejor forma de combatir la delincuencia, incluida la okupación.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "Impulsaremos políticas públicas de seguridad preventivas, que no sean estrictamente securitarias",
+          "referencia": "Apartado 18.4",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "AMPLIAREMOS LA PRISIÓN PERMANENTE REVISABLE A QUIEN HAGA DESAPARECER A SU VÍCTIMA Y A LOS DEPREDADORES SEXUALES.",
+          "referencia": "Medida 30",
+          "nota": "Endurece desórdenes públicos (21-24) y okupación (157); también incluye prevención (27).",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Propone juicios rápidos y más medios, no endurecer penas.",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "Mano dura contra la okupación y la inquiocupación. [...] Endurecimiento del Código penal.",
+          "referencia": "Medida 31",
+          "nota": "",
+          "intensidad": "normal"
+        }
+      }
+    },
+    {
+      "id": "S10",
+      "eje": "social",
+      "direccion": -1,
+      "tema": "LGTBI",
+      "etiqueta": "Sexo registral",
+      "texto": "Para cambiar el sexo en los documentos oficiales debería bastar con la voluntad de la persona.",
+      "posturas": {
+        "frente_amplio": {
+          "valor": 1,
+          "tipo": "literal",
+          "cita": "autodeterminación de las personas trans, intersex y no binarias",
+          "referencia": "Apartado 15.1",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "pp": {
+          "valor": -1,
+          "tipo": "literal",
+          "cita": "eliminaremos la libre autodeterminación registral del sexo",
+          "referencia": "Medida 115",
+          "nota": "",
+          "intensidad": "normal"
+        },
+        "psoe": {
+          "valor": 1,
+          "tipo": "deducida",
+          "cita": "Garantizar que la Ley 4/2023 sea el suelo común de derechos de las personas LGTBI en toda España",
+          "referencia": "Compromiso 412",
+          "nota": "La Ley 4/2023 es la que regula la autodeterminación registral.",
+          "intensidad": "normal"
+        },
+        "vox": {
+          "valor": 0,
+          "tipo": "sin_postura",
+          "cita": "",
+          "referencia": "",
+          "nota": "Solo se refiere a criterios biológicos en el deporte femenino.",
+          "intensidad": "normal"
+        }
+      }
+    }
+  ]
+}

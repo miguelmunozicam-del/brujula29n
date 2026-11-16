@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Veinte afirmaciones para situarte en un mapa político de dos ejes y comparar tus respuestas con los programas del 29N. Todo se calcula en tu navegador.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23212328' stroke-width='2.5'/%3E%3Cpath d='M16 5 L19 16 L16 27 L13 16 Z' fill='%23212328'/%3E%3C/svg%3E">
+<title>Brújula 29N</title>
+<style>
+/* ============ Tokens ============
+   Paleta deliberadamente monocroma (papel, grafito, lápiz) con un único acento ocre para avisos y foco:
+   ningún color asociable a un partido. Tipografía solo del sistema: cero peticiones a terceros. */
+:root{
+  --papel:#F7F7F5; --hoja:#FFFFFF; --grafito:#212328; --lapiz:#5F646C; --reticula:#D5D8DC;
+  --niebla:#E9EAEC; --niebla2:#DCDEE1; --previo:#7D838C; --marca:#8A5A00; --marca-fondo:#FBF3E2;
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Charter,"Bitstream Charter",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --r-s:8px; --r-m:14px; --r-l:22px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --papel:#14161A; --hoja:#1D2025; --grafito:#ECEDEF; --lapiz:#A6ABB4; --reticula:#363A42;
+    --niebla:#24272D; --niebla2:#30343B; --previo:#8D939C; --marca:#E9B44C; --marca-fondo:#2A2416;
+  }
+}
+:root[data-theme="dark"]{
+  --papel:#14161A; --hoja:#1D2025; --grafito:#ECEDEF; --lapiz:#A6ABB4; --reticula:#363A42;
+  --niebla:#24272D; --niebla2:#30343B; --previo:#8D939C; --marca:#E9B44C; --marca-fondo:#2A2416;
+}
+*{box-sizing:border-box}
+html{scroll-padding-bottom:110px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papel);color:var(--grafito);font:16px/1.55 var(--sans)}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--marca);outline-offset:3px;border-radius:6px}
+main:focus,main:focus-visible{outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Cabecera */
+.cab{position:sticky;top:0;z-index:6;background:var(--papel);border-bottom:1px solid var(--reticula)}
+.cab .wrap{display:flex;align-items:center;justify-content:space-between;min-height:56px}
+.marca-logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.1px;background:none;border:0;color:var(--grafito);padding:6px 0;cursor:pointer}
+.marca-logo svg{width:24px;height:24px}
+.icono{width:44px;height:44px;border-radius:50%;border:1px solid var(--reticula);background:var(--hoja);color:var(--grafito);display:grid;place-items:center;cursor:pointer}
+.icono svg{width:20px;height:20px}
+
+main{outline:none;padding:28px 0 140px}
+
+/* Tipografía */
+h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--grafito)}
+h1{font-size:clamp(34px,8vw,46px);line-height:1.08;letter-spacing:-.4px;margin:0 0 18px}
+h2{font-size:24px;line-height:1.2;margin:36px 0 12px}
+h3{font-size:19px;line-height:1.25;margin:0 0 6px}
+p{margin:0 0 14px}
+.entrada{font-size:18px;line-height:1.6;max-width:34em}
+.suave{color:var(--lapiz)}
+.peq{font-size:14px;line-height:1.5}
+.num{font-variant-numeric:tabular-nums}
+
+/* Botones */
+.btn{font:600 16px/1 var(--sans);min-height:52px;padding:0 22px;border-radius:var(--r-l);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:transform .12s var(--ease),background .15s}
+.btn:active{transform:scale(.98)}
+.btn-1{background:var(--grafito);color:var(--papel);border:0;width:100%}
+.btn-2{background:transparent;color:var(--grafito);border:1.5px solid var(--grafito);width:100%}
+.btn-txt{background:none;border:0;color:var(--grafito);font:500 15px/1.2 var(--sans);text-decoration:underline;text-underline-offset:3px;min-height:44px;padding:8px 2px;cursor:pointer}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:5;background:linear-gradient(to top,var(--papel) 70%,transparent);padding:22px 0 calc(14px + env(safe-area-inset-bottom))}
+.dock .wrap{display:flex;flex-direction:column;gap:8px}
+
+/* Inicio */
+.portada{display:grid;gap:8px}
+.mapa-mini{width:132px;height:132px;margin:4px 0 20px}
+.nota{border-left:3px solid var(--grafito);padding:2px 0 2px 16px;margin:24px 0}
+.nota strong{display:block;font-family:var(--serif);font-size:18px;margin-bottom:4px}
+.ficha{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--lapiz);margin-top:8px}
+.ficha span{display:inline-flex;gap:6px;align-items:center}
+
+/* Test */
+.test-top{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--lapiz)}
+.regla{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;margin:10px 0 0}
+.regla i{height:6px;border-radius:3px;background:var(--niebla2)}
+.regla i.hecha{background:var(--grafito)}
+.regla i.actual{background:var(--grafito);opacity:.35}
+.enunciado{font-family:var(--serif);font-size:clamp(25px,6.4vw,32px);line-height:1.25;font-weight:500;letter-spacing:-.2px;margin:40px 0 0;min-height:5.2em}
+.enunciado.entra{animation:entra .32s var(--ease)}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.escala{margin-top:28px}
+.extremos{display:flex;justify-content:space-between;font-size:14px;color:var(--lapiz);margin-bottom:12px}
+.puntos{display:flex;justify-content:space-between;align-items:center}
+.punto{width:60px;height:60px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center;border-radius:50%}
+.punto span{display:block;border-radius:50%;border:2px solid var(--grafito);background:var(--hoja);transition:transform .15s var(--ease),background .15s}
+.punto[data-i="0"] span,.punto[data-i="4"] span{width:52px;height:52px}
+.punto[data-i="1"] span,.punto[data-i="3"] span{width:42px;height:42px}
+.punto[data-i="2"] span{width:30px;height:30px;border-style:dashed}
+.punto:hover span{transform:scale(1.06)}
+.punto[aria-pressed="true"] span{background:var(--grafito);border-style:solid}
+.eleccion{text-align:center;min-height:24px;margin-top:14px;font-weight:600}
+.test-pie{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+.atajo{display:none;font-size:13px;color:var(--lapiz)}
+@media (hover:hover) and (pointer:fine){.atajo{display:block}}
+
+/* Resultado: pestañas */
+.pestanas{position:sticky;top:56px;z-index:4;background:var(--papel);padding:10px 0;margin:0 0 8px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--niebla);border-radius:var(--r-l);padding:4px}
+.seg button{min-height:44px;border:0;border-radius:18px;background:none;color:var(--lapiz);font:600 14px/1.1 var(--sans);cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--hoja);color:var(--grafito);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* Gráfico */
+.carta{background:var(--hoja);border:1px solid var(--reticula);border-radius:var(--r-l);padding:12px 8px 6px;margin:6px 0 0}
+.grafico{width:100%;max-width:460px;display:block;margin:0 auto}
+.grafico text{font-family:var(--sans);fill:var(--grafito)}
+.grafico .rot{font-family:var(--serif);font-size:15px;font-weight:600}
+.grafico .sub{font-size:10px;fill:var(--lapiz)}
+.grafico .tick{font-size:9px;fill:var(--lapiz)}
+#yo{transition:transform 1.1s var(--ease)}
+@media (prefers-reduced-motion: reduce){#yo{transition:none}.enunciado.entra{animation:none}}
+.coords{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}
+.coord{border-top:2px solid var(--grafito);padding-top:10px}
+.coord .k{font-size:14px;color:var(--lapiz)}
+.coord .v{font-family:var(--serif);font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+.coord .d{font-size:14px}
+.perfil p{font-size:17px;line-height:1.6}
+
+/* Programas */
+.leyenda{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--lapiz);margin:6px 0 4px}
+.leyenda span{display:inline-flex;align-items:center;gap:6px}
+.prog{padding:20px 0;border-bottom:1px solid var(--reticula)}
+.prog:last-of-type{border-bottom:0}
+.prog-cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+.cifras{font-size:14px;color:var(--lapiz);text-align:right}
+.cifras b{color:var(--grafito);font-variant-numeric:tabular-nums}
+.tira{display:grid;grid-template-columns:repeat(10,1fr) 10px repeat(10,1fr);gap:3px;align-items:center}
+.tira i,.ley{display:block;height:22px;border-radius:4px}
+.ley{width:14px;height:14px;border-radius:3px}
+.c-coincide{background:var(--grafito)}
+.c-discrepa{background:var(--hoja);box-shadow:inset 0 0 0 2px var(--grafito)}
+.c-sin{background:repeating-linear-gradient(135deg,var(--niebla2) 0 3px,transparent 3px 6px);box-shadow:inset 0 0 0 1px var(--reticula)}
+.c-neutral{background:var(--niebla)}
+.c-doble{outline:2px solid var(--marca);outline-offset:1px}
+.tira-rot{display:grid;grid-template-columns:1fr 10px 1fr;font-size:12px;color:var(--lapiz);margin-top:4px}
+.prog details{margin-top:10px}
+.prog summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.prog dl{margin:4px 0 0;font-size:15px}
+.prog dt{font-weight:600;margin-top:8px}
+.prog dd{margin:2px 0 0;color:var(--lapiz)}
+.aviso{background:var(--marca-fondo);border-radius:var(--r-m);padding:14px 16px;margin:12px 0}
+.aviso strong{color:var(--marca);display:block;margin-bottom:4px}
+.aviso ul{margin:6px 0 0;padding-left:18px}
+
+/* Afirmaciones */
+.filtro{display:flex;gap:8px;margin:4px 0 8px;flex-wrap:wrap}
+.filtro button{min-height:40px;border-radius:20px;padding:0 14px;border:1.5px solid var(--reticula);background:var(--hoja);color:var(--grafito);font:500 14px/1 var(--sans);cursor:pointer}
+.filtro button[aria-pressed="true"]{border-color:var(--grafito);background:var(--grafito);color:var(--papel)}
+details.af{border-bottom:1px solid var(--reticula)}
+details.af>summary{list-style:none;cursor:pointer;padding:16px 0}
+details.af>summary::-webkit-details-marker{display:none}
+.af-tema{font-size:13px;color:var(--lapiz)}
+.af-texto{font-family:var(--serif);font-size:18px;line-height:1.35;margin:2px 0 8px}
+.af-resp{font-size:14px;margin-bottom:8px}
+.marcas{display:flex;flex-wrap:wrap;gap:6px}
+.m{display:inline-flex;align-items:center;gap:6px;font-size:13px;border-radius:14px;padding:3px 10px 3px 6px;border:1.5px solid var(--reticula)}
+.m b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:11px}
+.m.coincide{border-color:var(--grafito)} .m.coincide b{background:var(--grafito);color:var(--papel)}
+.m.discrepa{border-color:var(--grafito)} .m.discrepa b{box-shadow:inset 0 0 0 1.5px var(--grafito)}
+.m.otro{color:var(--lapiz);border-style:dashed}
+.af-cuerpo{padding:0 0 18px}
+.cita{margin:14px 0 0;padding-left:14px;border-left:2px solid var(--reticula)}
+.cita .quien{font-weight:600}
+.cita q{display:block;font-family:var(--serif);font-style:italic;margin:4px 0}
+.etq{font-size:12px;border:1px solid var(--reticula);border-radius:6px;padding:1px 6px;margin-left:6px;color:var(--lapiz);font-weight:500}
+
+.cierre{font-family:var(--serif);font-size:22px;text-align:center;margin:44px 0 6px}
+.acciones{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 18px;margin-top:10px}
+
+/* Datos */
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:12px 6px;border-bottom:1px solid var(--reticula);text-align:right}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:13px;color:var(--lapiz);font-weight:600}
+
+#toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);background:var(--grafito);color:var(--papel);padding:12px 16px;border-radius:var(--r-m);max-width:min(92vw,520px);display:none;z-index:10;align-items:center;gap:14px;font-size:15px}
+#toast button{background:none;color:var(--papel);border:1.5px solid var(--papel);border-radius:10px;min-height:36px;padding:0 10px;font:600 14px var(--sans);cursor:pointer}
+.capa{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:20;padding:16px}
+.hojita{background:var(--hoja);border-radius:var(--r-l);padding:22px;max-width:520px;width:100%}
+
+#informe{display:none}
+@media print{
+  :root,:root[data-theme="dark"]{--papel:#fff;--hoja:#fff;--grafito:#111;--lapiz:#444;--reticula:#bbb;--niebla:#eee;--niebla2:#ddd;--previo:#777;--marca:#7A4D00;--marca-fondo:#FFF6E5}
+  body{font-size:10.5pt;background:#fff}
+  .cab,main,#toast,.dock,.capa{display:none!important}
+  #informe{display:block}
+  .salto{break-before:page}
+  .carta,.aviso,table,.cita,.prog,details.af{break-inside:avoid}
+  h1{font-size:28pt} h2{font-size:16pt;margin-top:20px}
+  .carta{border:0}
+  .tira i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .c-coincide,.c-discrepa,.c-sin,.c-neutral,.m b,.ley{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@page{margin:16mm 15mm}
+</style>
+</head>
+<body>
+<header class="cab"><div class="wrap">
+  <button class="marca-logo" id="logo" type="button" aria-label="Brújula 29N, ir al inicio">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16 5 L19 16 L16 27 L13 16 Z" fill="currentColor"/></svg>
+    Brújula 29N
+  </button>
+  <button class="icono" id="btnTema" type="button" aria-label="Tema de color: automático">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+  </button>
+</div></header>
+<main id="app" class="wrap" tabindex="-1"><p class="suave">Cargando las afirmaciones…</p></main>
+<section id="informe" class="wrap" aria-hidden="true"></section>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ================= CORE (lógica pura, probada aparte) ================= */
+/* CORE-START */
+function puntuar(preguntas, resp){
+  // Cada respuesta vale de -2 a +2 y se multiplica por la dirección (+1/-1). La suma de cada eje se divide entre 2: escala -10..+10.
+  var ejes={economico:0,social:0};
+  preguntas.forEach(function(q){var v=resp[q.id]; if(typeof v==="number") ejes[q.eje]+=v*q.direccion;});
+  return {economico:ejes.economico/2, social:ejes.social/2};
+}
+function categoria(v){var a=Math.abs(v); if(a<=2) return "centro"; if(a<=5) return "moderada"; if(a<=8) return "clara"; return "muy marcada";}
+function estadoPostura(s, v){
+  if(s.tipo==="mixta") return "mixta";
+  if(s.valor===0) return "sin_postura";
+  if(!v) return "neutral";
+  return Math.sign(v)===s.valor ? "coincide" : "discrepa";
+}
+function cotejo(preguntas, partidos, resp){
+  // Peso implícito: las respuestas firmes («muy de acuerdo» / «muy en desacuerdo») cuentan el doble.
+  var res={};
+  partidos.forEach(function(p){res[p.id]={coincide:0,discrepa:0,sinPostura:0,neutral:0,coincidePeso:0,discrepaPeso:0,detalle:[]};});
+  preguntas.forEach(function(q){
+    var v=resp[q.id], peso=Math.abs(v)===2?2:1;
+    partidos.forEach(function(p){
+      var e=estadoPostura(q.posturas[p.id], v), r=res[p.id];
+      if(e==="coincide"){r.coincide++; r.coincidePeso+=peso;}
+      else if(e==="discrepa"){r.discrepa++; r.discrepaPeso+=peso;}
+      else if(e==="neutral"){r.neutral++;}
+      else {r.sinPostura++;}
+      r.detalle.push({id:q.id,estado:e,peso:peso});
+    });
+  });
+  return res;
+}
+function avisosGrado(preguntas, partidos, resp){
+  var out=[];
+  preguntas.forEach(function(q){
+    var v=resp[q.id]; if(Math.abs(v)!==1) return;
+    partidos.forEach(function(p){var s=q.posturas[p.id];
+      if(s.intensidad==="alta" && estadoPostura(s,v)==="coincide") out.push({q:q,p:p,s:s});});
+  });
+  return out;
+}
+function avisosSinPostura(preguntas, partidos, umbral){
+  var out=[];
+  partidos.forEach(function(p){var n=preguntas.filter(function(q){return q.posturas[p.id].valor===0;}).length; if(n>=umbral) out.push({p:p,n:n});});
+  return out;
+}
+function contarCambios(prev, act){var n=0; Object.keys(act).forEach(function(k){if(prev[k]!==act[k]) n++;}); return n;}
+function ordenIntercalado(preguntas){
+  // Alterna economía y sociedad para que el test no se perciba por bloques.
+  var e=preguntas.filter(function(q){return q.eje==="economico";}), s=preguntas.filter(function(q){return q.eje==="social";}), o=[];
+  for(var i=0;i<Math.max(e.length,s.length);i++){ if(e[i]) o.push(e[i]); if(s[i]) o.push(s[i]); }
+  return o;
+}
+/* CORE-END */
+
+/* ================= Estado y almacenamiento ================= */
+var CLAVE="brujula29n:v1", CLAVE_TEMA="brujula29n:tema";
+var DATOS=null, ESCALA=null, ORDEN=[];
+var est={vista:"inicio", i:0, resp:{}, tandaId:null, pestana:"posicion", filtro:"todas"};
+function hoyISO(){return new Date().toISOString();}
+function uuid(){return (window.crypto&&crypto.randomUUID)?crypto.randomUUID():"id-"+Date.now()+"-"+Math.random().toString(16).slice(2);}
+function leer(){try{var r=JSON.parse(localStorage.getItem(CLAVE)); if(r&&Array.isArray(r.tandas)) return r;}catch(e){} return {version:1,actualizado:hoyISO(),tandas:[]};}
+function guardar(db){try{db.actualizado=hoyISO(); localStorage.setItem(CLAVE,JSON.stringify(db)); return true;}catch(e){toast("Este navegador no permite guardar. Verás el resultado igualmente, pero no quedará en el historial."); return false;}}
+function tandasActivas(){return leer().tandas.filter(function(t){return !t.borrado;});}
+
+/* ================= Utilidades ================= */
+var $app=document.getElementById("app");
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function num(v){var s=Math.abs(v).toLocaleString("es-ES",{minimumFractionDigits:1,maximumFractionDigits:1}); return (v>0?"+":v<0?"−":"")+s;}
+function fecha(iso){try{return new Date(iso).toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});}catch(e){return iso;}}
+function pregunta(id){return DATOS.preguntas.filter(function(q){return q.id===id;})[0];}
+function partidos(){return DATOS.partidos.slice().sort(function(a,b){return a.nombre.localeCompare(b.nombre,"es");});}
+function textoRespuesta(v){return ESCALA.opciones[ESCALA.valores.indexOf(v)]||"Sin responder";}
+function listaY(arr){if(arr.length<2) return arr.join(""); return arr.slice(0,-1).join(", ")+" y "+arr[arr.length-1];}
+var toastT=null;
+function toast(msg, accion, fn){
+  var t=document.getElementById("toast"); t.textContent=msg;
+  if(accion){var b=document.createElement("button"); b.type="button"; b.textContent=accion; b.onclick=function(){t.style.display="none"; fn();}; t.appendChild(b);}
+  t.style.display="flex"; clearTimeout(toastT); toastT=setTimeout(function(){t.style.display="none";},5000);
+}
+function irA(vista){est.vista=vista; render(); $app.focus({preventScroll:true}); window.scrollTo(0,0);}
+var NOMBRE_ESTADO={coincide:"coincide",discrepa:"discrepa",sin_postura:"sin postura",mixta:"medidas en ambos sentidos",neutral:"no cuenta: respuesta neutral"};
+var CLASE_TIRA={coincide:"c-coincide",discrepa:"c-discrepa",sin_postura:"c-sin",mixta:"c-sin",neutral:"c-neutral"};
+
+/* ================= Gráfico ================= */
+function svgGrafico(actual, previo, animar, idSufijo){
+  idSufijo=idSufijo||"";
+  var W=380, m=52, s=W-2*m, c=W/2, k=s/20;
+  function X(v){return c+v*k;} function Y(v){return c-v*k;}
+  function cl(v){return Math.max(-10,Math.min(10,v));}
+  var g='<svg class="grafico" viewBox="0 0 '+W+' '+W+'" role="img" aria-labelledby="gT'+idSufijo+' gD'+idSufijo+'" xmlns="http://www.w3.org/2000/svg">';
+  g+='<title id="gT'+idSufijo+'">Tu posición en el mapa político</title><desc id="gD'+idSufijo+'">Eje económico '+num(actual.economico)+', de intervencionista (−10) a liberal (+10). Eje social '+num(actual.social)+', de progresista (−10) a conservador (+10).'+(previo?' Tanda anterior: económico '+num(previo.economico)+', social '+num(previo.social)+'.':'')+'</desc>';
+  // retícula fina cada 2,5
+  for(var t=-10;t<=10;t+=2.5){
+    var fuerte=(t%5===0);
+    g+='<line x1="'+X(t)+'" y1="'+m+'" x2="'+X(t)+'" y2="'+(m+s)+'" stroke="var(--reticula)" stroke-width="'+(fuerte?.9:.5)+'"/>';
+    g+='<line x1="'+m+'" y1="'+Y(t)+'" x2="'+(m+s)+'" y2="'+Y(t)+'" stroke="var(--reticula)" stroke-width="'+(fuerte?.9:.5)+'"/>';
+  }
+  // zona de centro
+  g+='<rect x="'+X(-2)+'" y="'+m+'" width="'+(4*k)+'" height="'+s+'" fill="var(--niebla)" opacity=".85"/>';
+  g+='<rect x="'+m+'" y="'+Y(2)+'" width="'+s+'" height="'+(4*k)+'" fill="var(--niebla)" opacity=".85"/>';
+  g+='<rect x="'+X(-2)+'" y="'+Y(2)+'" width="'+(4*k)+'" height="'+(4*k)+'" fill="var(--niebla2)"/>';
+  g+='<rect x="'+m+'" y="'+m+'" width="'+s+'" height="'+s+'" fill="none" stroke="var(--grafito)" stroke-width="1.2"/>';
+  // ejes con marcas de escala
+  g+='<line x1="'+c+'" y1="'+m+'" x2="'+c+'" y2="'+(m+s)+'" stroke="var(--grafito)" stroke-width="1.2"/>';
+  g+='<line x1="'+m+'" y1="'+c+'" x2="'+(m+s)+'" y2="'+c+'" stroke="var(--grafito)" stroke-width="1.2"/>';
+  for(var u=-10;u<=10;u++){ if(u===0) continue; var L=(u%5===0)?5:2.5;
+    g+='<line x1="'+X(u)+'" y1="'+(c-L)+'" x2="'+X(u)+'" y2="'+(c+L)+'" stroke="var(--grafito)" stroke-width=".8"/>';
+    g+='<line x1="'+(c-L)+'" y1="'+Y(u)+'" x2="'+(c+L)+'" y2="'+Y(u)+'" stroke="var(--grafito)" stroke-width=".8"/>'; }
+  [-5,5].forEach(function(t){
+    g+='<text class="tick" x="'+X(t)+'" y="'+(c+16)+'" text-anchor="middle">'+t+'</text>';
+    g+='<text class="tick" x="'+(c+8)+'" y="'+(Y(t)+3)+'">'+t+'</text>';});
+  // rótulos de los polos
+  g+='<text class="rot" x="'+c+'" y="'+(m-22)+'" text-anchor="middle">Liberal</text><text class="sub" x="'+c+'" y="'+(m-8)+'" text-anchor="middle">en economía</text>';
+  g+='<text class="rot" x="'+c+'" y="'+(m+s+22)+'" text-anchor="middle">Intervencionista</text><text class="sub" x="'+c+'" y="'+(m+s+36)+'" text-anchor="middle">en economía</text>';
+  g+='<text class="rot" x="'+(m-10)+'" y="'+c+'" text-anchor="middle" transform="rotate(-90 '+(m-10)+' '+c+')">Progresista</text>';
+  g+='<text class="rot" x="'+(m+s+12)+'" y="'+c+'" text-anchor="middle" transform="rotate(90 '+(m+s+12)+' '+c+')">Conservador</text>';
+  g+='<text class="sub" x="'+(m+s-4)+'" y="'+(m+s-6)+'" text-anchor="end">en lo social</text>';
+  if(previo){
+    var px=X(cl(previo.social)), py=Y(cl(previo.economico));
+    g+='<circle cx="'+px+'" cy="'+py+'" r="8" fill="none" stroke="var(--previo)" stroke-width="2" stroke-dasharray="3 2.5"/>';
+    g+='<text x="'+(px+(px>c?-12:12))+'" y="'+(py+18)+'" text-anchor="'+(px>c?"end":"start")+'" font-size="11" style="fill:var(--previo);paint-order:stroke;stroke:var(--hoja);stroke-width:3px">anterior</text>';
+  }
+  var ux=X(cl(actual.social))-c, uy=Y(cl(actual.economico))-c;
+  var tr=animar?'translate(0px,0px)':'translate('+ux+'px,'+uy+'px)';
+  g+='<g id="yo'+idSufijo+'" data-x="'+ux+'" data-y="'+uy+'" style="transform:'+tr+'">';
+  g+='<circle cx="'+c+'" cy="'+c+'" r="15" fill="var(--grafito)" opacity=".14"/>';
+  g+='<circle cx="'+c+'" cy="'+c+'" r="8" fill="var(--grafito)" stroke="var(--hoja)" stroke-width="2.5"/>';
+  g+='<text x="'+(c+(ux>60?-18:18))+'" y="'+(c-12)+'" text-anchor="'+(ux>60?"end":"start")+'" font-size="14" font-weight="700" style="paint-order:stroke;stroke:var(--hoja);stroke-width:4px">Tú</text>';
+  g+='</g></svg>';
+  return g;
+}
+function animarPunto(){
+  var el=document.getElementById("yo"); if(!el) return;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){el.style.transform='translate('+el.getAttribute("data-x")+'px,'+el.getAttribute("data-y")+'px)';});});
+}
+function svgMini(){
+  return '<svg class="mapa-mini" viewBox="0 0 132 132" aria-hidden="true"><rect x="6" y="6" width="120" height="120" fill="var(--hoja)" stroke="var(--grafito)" stroke-width="1.5"/>'+
+    '<rect x="54" y="6" width="24" height="120" fill="var(--niebla)"/><rect x="6" y="54" width="120" height="24" fill="var(--niebla)"/>'+
+    '<line x1="66" y1="6" x2="66" y2="126" stroke="var(--grafito)"/><line x1="6" y1="66" x2="126" y2="66" stroke="var(--grafito)"/>'+
+    '<circle cx="66" cy="66" r="15" fill="none" stroke="var(--grafito)" stroke-dasharray="3 3"/><text x="66" y="71" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="var(--grafito)">?</text></svg>';
+}
+
+/* ================= Comentario ================= */
+function comentario(pt){
+  var e=pt.economico, s=pt.social, ce=categoria(e), cs=categoria(s);
+  function lado(v,neg,pos){return v>0?pos:neg;}
+  var pE= ce==="centro" ? "En economía te sitúas en el centro: tus respuestas se compensan entre la intervención del Estado y el mercado." :
+    "En economía tu posición es "+lado(e,"intervencionista","liberal")+" "+ce+": "+lado(e,"tiendes a confiar en el Estado para corregir el mercado y redistribuir","tiendes a confiar en el mercado y en menos impuestos y regulación")+".";
+  var pS= cs==="centro" ? "En lo social te sitúas en el centro: combinas posiciones de ambos lados." :
+    "En lo social tu posición es "+lado(s,"progresista","conservadora")+" "+cs+": "+lado(s,"te inclinas por ampliar derechos individuales y cambios en las normas sociales","te inclinas por preservar normas, tradiciones e identidad común")+".";
+  var g;
+  if(ce==="centro"&&cs==="centro") g="En conjunto quedas cerca del centro en los dos ejes.";
+  else if(ce==="centro") g="Tu perfil lo define sobre todo el eje social.";
+  else if(cs==="centro") g="Tu perfil lo define sobre todo el eje económico.";
+  else g="En conjunto combinas una visión "+lado(e,"intervencionista","liberal")+" en economía con una visión "+lado(s,"progresista","conservadora")+" en lo social.";
+  return {economico:pE, social:pS, global:g, ce:ce, cs:cs};
+}
+function etiquetaEje(v, neg, pos){var c=categoria(v); return c==="centro"?"centro":(v>0?pos:neg)+" "+c;}
+function lectura(resp){
+  var neutras=DATOS.preguntas.filter(function(q){return resp[q.id]===0;});
+  var firmes=ORDEN.filter(function(q){return Math.abs(resp[q.id])===2;});
+  var t=[];
+  if(firmes.length) t.push("Respondiste con más firmeza en: "+listaY(firmes.map(function(q){return q.etiqueta.charAt(0).toLowerCase()+q.etiqueta.slice(1);}))+". Esos temas cuentan el doble al compararte con los programas.");
+  else t.push("No marcaste ninguna respuesta extrema: tus posiciones son, en general, matizadas.");
+  if(neutras.length) t.push("En "+neutras.length+" "+(neutras.length===1?"afirmación":"afirmaciones")+" no tomaste postura; no cuentan en las coincidencias.");
+  return t;
+}
+
+/* ================= Vistas ================= */
+function render(){
+  ({inicio:vInicio,test:vTest,resultado:vResultado,datos:vDatos})[est.vista]();
+}
+function vInicio(){
+  var ts=tandasActivas(), h='<div class="portada">';
+  h+=svgMini();
+  h+='<h1>Antes de votar, sitúate.</h1>';
+  h+='<p class="entrada">Veinte afirmaciones sobre los debates de esta campaña. Al terminar verás dónde quedas en economía y en lo social, y en qué temas coincides o discrepas con cada programa.</p>';
+  h+='<div class="nota"><strong>Tus respuestas no salen de este dispositivo</strong><span class="peq">Revelan opiniones políticas, un dato especialmente protegido. Todo se calcula en tu navegador: sin registro, sin analítica y sin envíos a ningún servidor. Lo que guardes se queda aquí y puedes borrarlo cuando quieras.</span></div>';
+  h+='<div class="ficha"><span>Unos 4 minutos</span><span>Programas de '+listaY(partidos().map(function(p){return esc(p.nombre);}))+', en orden alfabético</span><span>No es una encuesta ni una recomendación de voto</span></div>';
+  h+='</div><div class="dock"><div class="wrap"><button type="button" class="btn btn-1" id="bEmpezar">Empezar</button>';
+  if(ts.length) h+='<button type="button" class="btn btn-2" id="bUltimo">Ver tu último resultado</button>';
+  h+='</div></div>';
+  if(ts.length) h+='<p style="margin-top:20px"><button type="button" class="btn-txt" id="bDatos">Historial y copias</button></p>';
+  $app.innerHTML=h;
+  document.getElementById("bEmpezar").onclick=function(){est.i=0; est.resp={}; est.tandaId=null; irA("test");};
+  if(ts.length){
+    document.getElementById("bUltimo").onclick=function(){abrirTanda(ts[ts.length-1]);};
+    document.getElementById("bDatos").onclick=function(){irA("datos");};
+  }
+}
+function abrirTanda(t){est.resp=t.respuestas; est.tandaId=t.id; est.pestana="posicion"; est.animar=false; irA("resultado");}
+function vTest(){
+  var q=ORDEN[est.i], n=ORDEN.length, h='', v=est.resp[q.id];
+  h+='<div class="test-top"><span>'+esc(q.tema)+'</span><span class="num" id="pLabel">'+(est.i+1)+' de '+n+'</span></div>';
+  h+='<div class="regla" role="progressbar" aria-labelledby="pLabel" aria-valuemin="1" aria-valuemax="'+n+'" aria-valuenow="'+(est.i+1)+'">';
+  for(var j=0;j<n;j++) h+='<i class="'+(j<est.i?"hecha":j===est.i?"actual":"")+'"></i>';
+  h+='</div>';
+  h+='<p class="enunciado entra" id="enun">'+esc(q.texto)+'</p>';
+  h+='<div class="escala" role="group" aria-labelledby="enun"><div class="extremos" aria-hidden="true"><span>En desacuerdo</span><span>De acuerdo</span></div><div class="puntos">';
+  ESCALA.opciones.forEach(function(o,j){var val=ESCALA.valores[j];
+    h+='<button type="button" class="punto" data-i="'+j+'" data-v="'+val+'" aria-pressed="'+(v===val)+'" aria-label="'+esc(o)+'"><span></span></button>';});
+  h+='</div><p class="eleccion" id="eleccion" aria-live="polite">'+(v!==undefined?esc(textoRespuesta(v)):'&nbsp;')+'</p></div>';
+  h+='<div class="test-pie"><button type="button" class="btn-txt" id="bAnt">Anterior</button><span class="atajo">Teclas 1 a 5</span>';
+  h+=(v!==undefined?'<button type="button" class="btn-txt" id="bSig">Siguiente</button>':'<span></span>')+'</div>';
+  $app.innerHTML=h;
+  var el=document.getElementById("eleccion");
+  Array.prototype.forEach.call($app.querySelectorAll(".punto"),function(b){
+    b.onclick=function(){responder(parseInt(b.getAttribute("data-v"),10));};
+    b.onmouseenter=b.onfocus=function(){el.textContent=b.getAttribute("aria-label");};
+    b.onmouseleave=b.onblur=function(){var vv=est.resp[q.id]; el.innerHTML=vv!==undefined?esc(textoRespuesta(vv)):'&nbsp;';};
+  });
+  document.getElementById("bAnt").onclick=function(){ if(est.i===0) irA("inicio"); else {est.i--; render();} };
+  var bs=document.getElementById("bSig"); if(bs) bs.onclick=avanzar;
+}
+var bloqueo=false;
+function responder(v){
+  if(bloqueo) return; bloqueo=true;
+  var q=ORDEN[est.i]; est.resp[q.id]=v;
+  Array.prototype.forEach.call($app.querySelectorAll(".punto"),function(b){b.setAttribute("aria-pressed",String(parseInt(b.getAttribute("data-v"),10)===v));});
+  document.getElementById("eleccion").textContent=textoRespuesta(v);
+  setTimeout(function(){bloqueo=false; avanzar();},260);
+}
+function avanzar(){ if(est.i<ORDEN.length-1){est.i++; render();} else finalizar(); }
+document.addEventListener("keydown",function(e){
+  if(est.vista!=="test"||e.altKey||e.ctrlKey||e.metaKey) return;
+  var k=parseInt(e.key,10); if(k>=1&&k<=5){e.preventDefault(); responder(ESCALA.valores[k-1]);}
+  if(e.key==="ArrowLeft"&&est.i>0){est.i--; render();}
+});
+function finalizar(){
+  var db=leer(), t={id:uuid(),creado:hoyISO(),modificado:hoyISO(),respuestas:JSON.parse(JSON.stringify(est.resp)),borrado:false};
+  db.tandas.push(t); est.tandaId=t.id; guardar(db);
+  est.pestana="posicion"; est.animar=true; irA("resultado");
+}
+function previaDe(id){var ts=tandasActivas(), i=-1; ts.forEach(function(t,j){if(t.id===id) i=j;}); return i>0?ts[i-1]:null;}
+function calcular(){
+  var pt=puntuar(DATOS.preguntas, est.resp), prev=est.tandaId?previaDe(est.tandaId):null;
+  return {pt:pt, prev:prev, ptPrev:prev?puntuar(DATOS.preguntas, prev.respuestas):null,
+    cot:cotejo(DATOS.preguntas, partidos(), est.resp),
+    grado:avisosGrado(DATOS.preguntas, partidos(), est.resp),
+    sinP:avisosSinPostura(DATOS.preguntas, partidos(), DATOS.umbral_sin_postura||5),
+    cambios:prev?contarCambios(prev.respuestas, est.resp):null, com:comentario(pt), lec:lectura(est.resp)};
+}
+
+/* ---- bloques reutilizados en pantalla e informe ---- */
+function htmlPosicion(r, informe){
+  var h='<div class="carta">'+svgGrafico(r.pt, r.ptPrev, !informe&&est.animar, informe?"i":"")+'</div>';
+  if(r.prev) h+='<p class="peq suave" style="text-align:center;margin-top:8px">Círculo discontinuo: tu resultado del '+fecha(r.prev.creado)+'.</p>';
+  h+='<div class="coords"><div class="coord"><div class="k">Economía</div><div class="v">'+num(r.pt.economico)+'</div><div class="d">'+etiquetaEje(r.pt.economico,"intervencionista","liberal")+'</div></div>';
+  h+='<div class="coord"><div class="k">Sociedad</div><div class="v">'+num(r.pt.social)+'</div><div class="d">'+etiquetaEje(r.pt.social,"progresista","conservadora")+'</div></div></div>';
+  h+='<p class="peq suave">Escala de −10 a +10. La franja gris marca el centro, entre −2 y +2.</p>';
+  h+='<div class="perfil"><h2>Tu perfil</h2><p>'+esc(r.com.global)+'</p><p>'+esc(r.com.economico)+'</p><p>'+esc(r.com.social)+'</p>';
+  r.lec.forEach(function(t){h+='<p class="suave">'+esc(t)+'</p>';});
+  h+='</div>';
+  if(r.prev){
+    var mucho=r.cambios>=(DATOS.umbral_cambios||5);
+    h+='<div class="'+(mucho?'aviso':'nota')+'"><strong>Has cambiado '+r.cambios+' de '+DATOS.preguntas.length+' respuestas desde la vez anterior</strong>'+(mucho?'<span class="peq">Es un cambio notable. Puede merecer la pena revisar esas afirmaciones con calma.</span>':'')+'</div>';
+  }
+  return h;
+}
+function htmlAvisos(r){
+  var h='';
+  if(r.grado.length){
+    h+='<div class="aviso"><strong>Coincidir en la dirección no es coincidir en el grado</strong><span class="peq">Respondiste de forma moderada en temas donde algunos programas proponen medidas de máxima intensidad:</span><ul class="peq">';
+    r.grado.forEach(function(a){h+='<li>'+esc(a.p.nombre)+', '+esc(a.q.etiqueta.toLowerCase())+(a.s.nota?'. '+esc(a.s.nota):'')+'</li>';});
+    h+='</ul></div>';
+  }
+  if(r.sinP.length){
+    h+='<div class="aviso"><strong>Programas que no se pronuncian en muchos temas</strong><span class="peq">'+listaY(r.sinP.map(function(a){return esc(a.p.nombre)+' ('+a.n+' de '+DATOS.preguntas.length+')';}))+'. Puede deberse a la extensión o al enfoque del documento, no necesariamente a una omisión deliberada. Tenlo en cuenta al leer sus cifras.</span></div>';
+  }
+  return h;
+}
+function htmlLeyenda(){
+  return '<div class="leyenda" aria-hidden="true"><span><i class="ley c-coincide"></i>Coincides</span><span><i class="ley c-discrepa"></i>Discrepas</span><span><i class="ley c-sin"></i>Sin postura</span><span><i class="ley c-neutral"></i>Tu respuesta neutral</span><span><i class="ley c-coincide c-doble"></i>Respuesta firme, cuenta doble</span></div>';
+}
+function htmlProgramas(r, informe){
+  var h=htmlAvisos(r)+htmlLeyenda();
+  var ids=DATOS.preguntas.map(function(q){return q.id;});
+  partidos().forEach(function(p){var c=r.cot[p.id], porId={};
+    c.detalle.forEach(function(d){porId[d.id]=d;});
+    h+='<section class="prog" aria-label="'+esc(p.nombre)+'"><div class="prog-cab"><h3>'+esc(p.nombre)+'</h3>';
+    h+='<div class="cifras"><b>'+c.coincide+'</b> coinciden, <b>'+c.discrepa+'</b> discrepan<br><b>'+c.sinPostura+'</b> sin postura</div></div>';
+    h+='<div class="tira" role="img" aria-label="'+esc(p.nombre)+': '+c.coincide+' coincidencias, '+c.discrepa+' discrepancias, '+c.sinPostura+' sin postura">';
+    ids.forEach(function(id,j){var d=porId[id];
+      if(j===10) h+='<span></span>';
+      h+='<i class="'+CLASE_TIRA[d.estado]+(d.peso>1&&(d.estado==="coincide"||d.estado==="discrepa")?' c-doble':'')+'" title="'+esc(pregunta(id).etiqueta)+': '+NOMBRE_ESTADO[d.estado]+'"></i>';});
+    h+='</div><div class="tira-rot" aria-hidden="true"><span>Economía</span><span></span><span>Sociedad</span></div>';
+    function lista(es){return c.detalle.filter(function(d){return es.indexOf(d.estado)>=0;}).map(function(d){return esc(pregunta(d.id).etiqueta)+(d.peso>1&&es[0]!=="sin_postura"?' (firme)':'');});}
+    var co=lista(["coincide"]), di=lista(["discrepa"]), sp=lista(["sin_postura","mixta"]);
+    var cuerpo='<dl><dt>Coincides</dt><dd>'+(co.join(", ")||"En ningún tema")+'</dd><dt>Discrepas</dt><dd>'+(di.join(", ")||"En ningún tema")+'</dd><dt>Sin postura clara</dt><dd>'+(sp.join(", ")||"Ninguno")+'</dd></dl>';
+    h+=informe?cuerpo:'<details><summary>Ver los temas</summary>'+cuerpo+'</details>';
+    if(c.coincidePeso!==c.coincide||c.discrepaPeso!==c.discrepa) h+='<p class="peq suave" style="margin:8px 0 0">Con tus respuestas firmes contadas doble: '+c.coincidePeso+' coincidencias y '+c.discrepaPeso+' discrepancias.</p>';
+    h+='</section>';
+  });
+  h+='<p class="peq suave">Hay coincidencia cuando tu respuesta y la postura del programa van en el mismo sentido. Los programas aparecen en orden alfabético y no se sitúan en el mapa.</p>';
+  return h;
+}
+function htmlAfirmacion(q, abierta){
+  var v=est.resp[q.id], h='<details class="af"'+(abierta?' open':'')+'><summary>';
+  h+='<div class="af-tema">'+esc(q.tema)+(q.eje==="economico"?", economía":", sociedad")+'</div><div class="af-texto">'+esc(q.texto)+'</div>';
+  h+='<div class="af-resp">Tu respuesta: <strong>'+esc(textoRespuesta(v))+'</strong></div><div class="marcas">';
+  partidos().forEach(function(p){var e=estadoPostura(q.posturas[p.id],v);
+    var cls=e==="coincide"?"coincide":e==="discrepa"?"discrepa":"otro", sim=e==="coincide"?"✓":e==="discrepa"?"✕":"–";
+    h+='<span class="m '+cls+'"><b aria-hidden="true">'+sim+'</b>'+esc(p.nombre)+'<span class="sr">: '+NOMBRE_ESTADO[e]+'</span></span>';});
+  h+='</div></summary><div class="af-cuerpo">';
+  partidos().forEach(function(p){var s=q.posturas[p.id];
+    var post=s.tipo==="mixta"?"medidas en ambos sentidos":s.valor===1?"a favor":s.valor===-1?"en contra":"no se pronuncia";
+    h+='<div class="cita"><span class="quien">'+esc(p.nombre)+'</span>, '+post+(s.tipo==="literal"||s.tipo==="deducida"?'<span class="etq">'+s.tipo+'</span>':'');
+    if(s.cita) h+='<q>'+esc(s.cita)+'</q>';
+    if(s.referencia) h+='<div class="peq suave">'+esc(s.referencia)+(p.programa_url&&!abierta?', <a href="'+esc(p.programa_url)+'" target="_blank" rel="noopener noreferrer">ver programa</a>':'')+'</div>';
+    if(s.nota) h+='<div class="peq">'+esc(s.nota)+'</div>';
+    h+='</div>';});
+  if(DATOS.repo_url&&!abierta) h+='<p class="peq" style="margin-top:12px"><a href="'+esc(DATOS.repo_url.replace(/\/$/,""))+'/issues/new?title='+encodeURIComponent("Corrección "+q.id+": "+q.etiqueta)+'" target="_blank" rel="noopener noreferrer">Proponer una corrección</a></p>';
+  return h+'</div></details>';
+}
+function htmlAfirmaciones(informe){
+  var lista=informe?DATOS.preguntas:ORDEN.filter(function(q){return est.filtro==="todas"||q.eje===est.filtro;});
+  var h='';
+  if(!informe){
+    h+='<p class="peq suave">Toca una afirmación para ver la cita de cada programa. «Deducida» significa que el programa no lo dice con esas palabras, pero su medida implica esa postura.</p>';
+    h+='<div class="filtro" role="group" aria-label="Filtrar afirmaciones">';
+    [["todas","Todas"],["economico","Economía"],["social","Sociedad"]].forEach(function(f){h+='<button type="button" data-f="'+f[0]+'" aria-pressed="'+(est.filtro===f[0])+'">'+f[1]+'</button>';});
+    h+='</div>';
+  }
+  lista.forEach(function(q){h+=htmlAfirmacion(q, informe);});
+  return h;
+}
+function vResultado(){
+  var r=calcular(), h='';
+  h+='<h1 style="font-size:clamp(30px,7vw,40px)">Tu resultado</h1>';
+  h+='<div class="pestanas"><div class="seg" role="tablist" aria-label="Secciones del resultado">';
+  [["posicion","Tu posición"],["programas","Programas"],["afirmaciones","Afirmaciones"]].forEach(function(t){
+    h+='<button type="button" role="tab" id="tab-'+t[0]+'" aria-controls="panel" aria-selected="'+(est.pestana===t[0])+'" data-t="'+t[0]+'">'+t[1]+'</button>';});
+  h+='</div></div><div id="panel" role="tabpanel" aria-labelledby="tab-'+est.pestana+'">';
+  if(est.pestana==="posicion") h+=htmlPosicion(r,false);
+  else if(est.pestana==="programas") h+=htmlProgramas(r,false);
+  else h+=htmlAfirmaciones(false);
+  h+='<p class="cierre">Esto no es una recomendación de voto.<br>La decisión es tuya.</p>';
+  h+='<div class="acciones"><button type="button" class="btn-txt" id="bRepetir">Repetir el test</button><button type="button" class="btn-txt" id="bDatos">Historial y copias</button></div></div>';
+  h+='<div class="dock"><div class="wrap"><button type="button" class="btn btn-1" id="bPDF">Descargar el informe en PDF</button></div></div>';
+  $app.innerHTML=h;
+  Array.prototype.forEach.call($app.querySelectorAll("[role=tab]"),function(b){b.onclick=function(){est.pestana=b.getAttribute("data-t"); est.animar=false; render(); var t=document.getElementById("tab-"+est.pestana); if(t) t.focus();};});
+  Array.prototype.forEach.call($app.querySelectorAll("[data-f]"),function(b){b.onclick=function(){est.filtro=b.getAttribute("data-f"); render(); var f=$app.querySelector('[data-f="'+est.filtro+'"]'); if(f) f.focus();};});
+  document.getElementById("bPDF").onclick=function(){ayudaPDF(r);};
+  document.getElementById("bRepetir").onclick=function(){est.i=0; est.resp={}; est.tandaId=null; irA("test");};
+  document.getElementById("bDatos").onclick=function(){irA("datos");};
+  if(est.pestana==="posicion"&&est.animar){animarPunto(); est.animar=false;}
+}
+
+/* ================= Informe PDF: impresión del navegador, sin librerías ni envíos ================= */
+function ayudaPDF(r){
+  var visto=false; try{visto=localStorage.getItem("brujula29n:pdf")==="1";}catch(e){}
+  if(visto){generarInforme(r); return;}
+  dialogo("Guardar el informe en PDF","Se abrirá la ventana de impresión de tu navegador. En «Destino» o «Impresora» elige «Guardar como PDF». En iPhone, pulsa Compartir en la vista de impresión y elige «Guardar en Archivos».","Abrir y guardar",function(){try{localStorage.setItem("brujula29n:pdf","1");}catch(e){} generarInforme(r);});
+}
+function generarInforme(r){
+  var hoy=new Date().toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"}), h='';
+  h+='<h1>Brújula 29N</h1><p class="entrada">Informe personal generado el '+hoy+' en tu dispositivo. '+esc(DATOS.elecciones)+'.</p>';
+  h+='<h2>Resumen</h2><p>'+esc(r.com.global)+' Economía '+num(r.pt.economico)+' ('+etiquetaEje(r.pt.economico,"intervencionista","liberal")+'), sociedad '+num(r.pt.social)+' ('+etiquetaEje(r.pt.social,"progresista","conservadora")+').</p>';
+  h+='<h2>Gráfico y perfil eje por eje</h2>'+htmlPosicion(r,true);
+  h+='<h2 class="salto">Coincidencias con los programas</h2>'+htmlProgramas(r,true);
+  h+='<h2 class="salto">Detalle: tus respuestas y la postura de cada programa</h2>'+htmlAfirmaciones(true);
+  h+='<h2 class="salto">Lectura final</h2><p>Coincides en la dirección con medidas de varios programas y discrepas de otras. Coincidir en la dirección no implica coincidir en el grado ni en el conjunto de un programa. Este informe muestra coincidencias y discrepancias; no recomienda ningún voto.</p><p class="cierre">La decisión es tuya.</p>';
+  h+='<h2>Metodología y límites</h2>';
+  h+='<p class="peq"><strong>Test.</strong> 20 afirmaciones, 10 por eje, la mitad orientadas hacia cada polo para neutralizar el sesgo de quien tiende a asentir. Escala de 5 grados; cada respuesta vale de −2 a +2 y se multiplica por la dirección de la afirmación. La suma de cada eje se divide entre 2 (escala de −10 a +10). Entre −2 y +2 se considera centro.</p>';
+  h+='<p class="peq"><strong>Cotejo.</strong> Se leyeron completos los programas de '+listaY(partidos().map(function(p){return esc(p.nombre);}))+'. Para cada afirmación se codificó la postura de cada programa (a favor, en contra, sin postura o medidas en ambos sentidos) con una cita. «Literal»: el programa lo dice; «deducida»: su medida implica la postura sin interpretación de afinidad. Hay coincidencia cuando tu respuesta y la postura van en el mismo sentido. Las respuestas neutrales no cuentan; las firmes («muy de acuerdo» o «muy en desacuerdo») cuentan el doble.</p>';
+  h+='<p class="peq"><strong>Límites.</strong> Solo se comparan '+DATOS.partidos.length+' programas. Un programa no recoge todas las posiciones de un partido y la codificación es interpretable: puede revisarse y corregirse en el repositorio público. Coincidir en la dirección no mide la intensidad de las propuestas. Los partidos no se sitúan en el mapa, a propósito. No es una encuesta ni una recomendación de voto.</p>';
+  h+='<p class="peq"><strong>Privacidad.</strong> Este informe se ha generado en tu navegador. Ningún dato se ha enviado a ningún servidor.</p>';
+  document.getElementById("informe").innerHTML=h;
+  setTimeout(function(){window.print();},250);
+}
+
+/* ================= Diálogo propio (sustituye a confirm) ================= */
+function dialogo(titulo, texto, accion, fn){
+  var ov=document.createElement("div"); ov.className="capa"; ov.setAttribute("role","dialog"); ov.setAttribute("aria-modal","true"); ov.setAttribute("aria-labelledby","dlgT");
+  ov.innerHTML='<div class="hojita"><h2 id="dlgT" style="margin-top:0">'+esc(titulo)+'</h2><p>'+esc(texto)+'</p><div style="display:grid;gap:8px"><button type="button" class="btn btn-1" id="dlgOk">'+esc(accion)+'</button><button type="button" class="btn btn-2" id="dlgNo">Cancelar</button></div></div>';
+  document.body.appendChild(ov); var no=ov.querySelector("#dlgNo"); no.focus();
+  function cerrar(){ov.remove(); document.removeEventListener("keydown",k);}
+  function k(e){if(e.key==="Escape") cerrar();}
+  document.addEventListener("keydown",k);
+  ov.addEventListener("click",function(e){if(e.target===ov) cerrar();});
+  no.onclick=cerrar; ov.querySelector("#dlgOk").onclick=function(){cerrar(); fn();};
+}
+
+/* ================= Historial y copias ================= */
+function vDatos(){
+  var ts=tandasActivas(), h='<h1 style="font-size:clamp(30px,7vw,40px)">Historial y copias</h1>';
+  h+='<p class="suave">Tus resultados se guardan solo en este navegador. Nada se borra automáticamente.</p>';
+  if(!ts.length) h+='<div class="nota"><strong>Aún no hay resultados guardados</strong><span class="peq">Haz el test y tu resultado aparecerá aquí.</span></div>';
+  else { h+='<table><thead><tr><th scope="col">Fecha</th><th scope="col">Economía</th><th scope="col">Sociedad</th><th scope="col"><span class="sr">Abrir</span></th></tr></thead><tbody>';
+    ts.slice().reverse().forEach(function(t){var p=puntuar(DATOS.preguntas,t.respuestas);
+      h+='<tr><td>'+fecha(t.creado)+'</td><td>'+num(p.economico)+'</td><td>'+num(p.social)+'</td><td><button type="button" class="btn-txt" data-ver="'+t.id+'">Abrir</button></td></tr>';});
+    h+='</tbody></table>'; }
+  h+='<h2>Copias</h2><p class="peq suave">Descarga una copia para no perder tu historial si cambias de móvil o borras el navegador.</p><div style="display:grid;gap:8px">';
+  h+='<button type="button" class="btn btn-2" id="bExp"'+(ts.length?'':' disabled')+'>Descargar copia (JSON)</button>';
+  h+='<label class="btn btn-2" for="fImp">Cargar una copia</label><input type="file" id="fImp" accept="application/json,.json" class="sr"></div>';
+  if(ts.length) h+='<h2>Borrar</h2><button type="button" class="btn btn-2" id="bBorrar">Borrar todo el historial</button>';
+  h+='<p style="margin-top:24px"><button type="button" class="btn-txt" id="bVolver">Volver al inicio</button></p>';
+  $app.innerHTML=h;
+  Array.prototype.forEach.call($app.querySelectorAll("[data-ver]"),function(b){b.onclick=function(){abrirTanda(ts.filter(function(x){return x.id===b.getAttribute("data-ver");})[0]);};});
+  document.getElementById("bVolver").onclick=function(){irA("inicio");};
+  document.getElementById("bExp").onclick=function(){
+    var blob=new Blob([JSON.stringify(leer(),null,2)],{type:"application/json"}), a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download="brujula29n-copia-"+new Date().toISOString().slice(0,10)+".json"; document.body.appendChild(a); a.click(); a.remove();
+    toast("Copia descargada");};
+  document.getElementById("fImp").onchange=function(e){var f=e.target.files[0]; if(!f) return; var rd=new FileReader();
+    rd.onload=function(){try{var d=JSON.parse(rd.result); if(!d||!Array.isArray(d.tandas)) throw 0;
+      var anterior=leer(); guardar(d); vDatos(); toast("Copia cargada: "+d.tandas.length+" resultados","Deshacer",function(){guardar(anterior); vDatos();});
+    }catch(err){toast("Ese archivo no es una copia de Brújula 29N. Elige el JSON que descargaste desde aquí.");}}; rd.readAsText(f);};
+  var bb=document.getElementById("bBorrar");
+  if(bb) bb.onclick=function(){dialogo("¿Borrar todo el historial?","Se eliminarán de este navegador todos tus resultados guardados. No se puede deshacer.","Borrar todo el historial",function(){
+    try{localStorage.removeItem(CLAVE);}catch(e){} est.tandaId=null; vDatos(); toast("Historial borrado");});};
+}
+
+/* ================= Tema ================= */
+(function(){
+  var b=document.getElementById("btnTema"), modos=["auto","light","dark"], nombres={auto:"automático",light:"claro",dark:"oscuro"}, m="auto";
+  try{m=localStorage.getItem(CLAVE_TEMA)||"auto";}catch(e){}
+  function aplicar(){ if(m==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme",m); b.setAttribute("aria-label","Tema de color: "+nombres[m]+". Pulsa para cambiar"); b.title="Tema: "+nombres[m]; }
+  b.onclick=function(){m=modos[(modos.indexOf(m)+1)%3]; try{localStorage.setItem(CLAVE_TEMA,m);}catch(e){} aplicar(); toast("Tema "+nombres[m]);};
+  aplicar();
+})();
+document.getElementById("logo").onclick=function(){ if(DATOS) irA("inicio"); };
+
+/* ================= Arranque ================= */
+fetch("data/posturas.json",{cache:"no-cache"}).then(function(r){if(!r.ok) throw new Error(r.status); return r.json();})
+.then(function(d){DATOS=d; ESCALA=d.escala; ORDEN=ordenIntercalado(d.preguntas); render();})
+.catch(function(){
+  $app.innerHTML='<h1 style="font-size:32px">No se han podido cargar las afirmaciones</h1><p>La herramienta lee el archivo <code>data/posturas.json</code> y el navegador bloquea esa lectura si abres <code>index.html</code> con doble clic.</p><div class="nota"><strong>Cómo abrirla</strong><span class="peq">Usa la versión publicada en GitHub Pages o, en la carpeta del proyecto, ejecuta <code>python3 -m http.server 8000</code> y entra en <code>http://localhost:8000</code>.</span></div>';
+});
+</script>
+</body>
+</html>
